@@ -1,6 +1,6 @@
 @echo off
 
-if defined PL_CD exit /b
+if defined PL_CD if "%~1" == "" exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
 doskey git=git $* $T call "%~dp0update.cmd"
