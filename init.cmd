@@ -10,7 +10,7 @@ setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
 chcp 65001 >nul
 
-call styles.cmd %*
+call "%~dp0styles.cmd" %*
 
 set /a fore=3+6*0%bright_background%
 set /a back=4+6*0%bright_background%
@@ -26,4 +26,4 @@ net session 1>nul 2>nul && set cd_back=%cd_back_admin%
 
 call "%~dp0update.cmd"
 
-if exist header.cmd call header.cmd
+if exist "%~dp0header.cmd" call "%~dp0header.cmd"

@@ -24,7 +24,7 @@ set bright_background=1
 goto :eof
 
 :compact
-set cd_leading=
+set cd_leading=
 set cd_trailing=
 set git_leading=
 set git_trailing=
