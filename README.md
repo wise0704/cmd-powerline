@@ -4,11 +4,13 @@
 Simple and easily customisable Powerline for Windows Command Prompt.
 
 ![default](https://user-images.githubusercontent.com/13545633/214132836-0bfe0be8-77ac-45ea-86b3-382cc31cc179.png)  
-![compact](https://user-images.githubusercontent.com/13545633/214132920-e9dd9524-14bb-43d7-8cf6-0a7ca05fd197.png)  
+![compact](https://user-images.githubusercontent.com/13545633/214176152-e115b2b1-9bad-4b4c-b9b0-d29259f3497d.png)  
 ![color_1 new_line](https://user-images.githubusercontent.com/13545633/214133005-1fd7ecb8-7dba-4c06-8e5e-4e768ac85eab.png)  
 ![color_2 bash](https://user-images.githubusercontent.com/13545633/214133105-09c96a5a-05b3-4bc2-b587-c8bf226f1a2b.png)
 
 ## Setup
+
+**Prerequisite**: A font supporting Powerline needs to be installed.
 
 Firstly, [clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to a desired location.
 For example, under `%HOME%\.cmd\`.
@@ -44,6 +46,9 @@ This way, any instance of a Command Prompt window will have the Powerline set up
 However, do note that modifying the AutoRun key is not recommended.
 Although code contains checks to ensure that `init.cmd` is not called recursively and will only run on an interactive window,
 there may still be bugs due to the nature of the AutoRun key.
+
+> Additionally, you should modify or clear out the content of [`header.cmd`](#headercmd),
+as the original header text will be displayed as usual with this method.
 
 ## Configuration
 
