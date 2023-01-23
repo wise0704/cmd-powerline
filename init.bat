@@ -4,8 +4,8 @@ if defined PL_DIR exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
 set PL_DIR=%~dp0
-doskey git=call %PL_DIR%_git.bat $*
-doskey cd=call %PL_DIR%_cd.bat $*
+doskey git=call "%PL_DIR%_git.bat" $*
+doskey cd=call "%PL_DIR%_cd.bat" $*
 
 setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
@@ -37,7 +37,7 @@ net session 1>nul 2>nul && set cd_back=%cd_back_admin%
     chcp %cp% >nul
 )
 
-call %PL_DIR%update.bat
+call "%PL_DIR%update.bat"
 
 for /f "tokens=*" %%i in ('ver') do echo %%i
 echo (c) Microsoft Corporation. All rights reserved.
