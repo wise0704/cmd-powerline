@@ -1,11 +1,10 @@
 @echo off
 
-if defined PL_DIR exit /b
+if defined PL_CD exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
-set PL_DIR=%~dp0
-doskey git=call "%PL_DIR%_git.cmd" $*
-doskey cd=call "%PL_DIR%_cd.cmd" $*
+doskey git=git $* $T call "%~dp0update.cmd"
+doskey cd=cd $* $T call "%~dp0update.cmd"
 
 setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
@@ -25,6 +24,6 @@ net session 1>nul 2>nul && set cd_back=%cd_back_admin%
     chcp %cp% >nul
 )
 
-call "%PL_DIR%update.cmd"
+call "%~dp0update.cmd"
 
 if exist header.cmd call header.cmd
