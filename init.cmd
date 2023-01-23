@@ -3,8 +3,8 @@
 if defined PL_CD if "%~1" == "" exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
-doskey git=git $* $T call "%~dp0update.cmd"
-doskey cd=cd $* $T call "%~dp0update.cmd"
+doskey git=call "%~dp0update.cmd" git $*
+doskey cd=call "%~dp0update.cmd" cd $*
 
 setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
