@@ -4,14 +4,14 @@ if defined PL_DIR exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
 set PL_DIR=%~dp0
-doskey git=call "%PL_DIR%_git.bat" $*
-doskey cd=call "%PL_DIR%_cd.bat" $*
+doskey git=call "%PL_DIR%_git.cmd" $*
+doskey cd=call "%PL_DIR%_cd.cmd" $*
 
 setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
 chcp 65001 >nul
 
-call styles.bat %*
+call styles.cmd %*
 
 set /a fore=3+6*0%bright_background%
 set /a back=4+6*0%bright_background%
@@ -25,6 +25,6 @@ net session 1>nul 2>nul && set cd_back=%cd_back_admin%
     chcp %cp% >nul
 )
 
-call "%PL_DIR%update.bat"
+call "%PL_DIR%update.cmd"
 
-if exist header.bat call header.bat
+if exist header.cmd call header.cmd
