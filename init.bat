@@ -11,19 +11,7 @@ setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
 chcp 65001 >nul
 
-rem ========= [CUSTOMIZATION] =========
-set cd_fore=0
-set cd_back=6
-set cd_back_admin=1
-set git_fore=0
-set git_back=3
-set cd_leading=$S
-set cd_trailing=$S
-set git_leading=$S$S
-set git_trailing=$S
-set margin=$S
-set bright_background=1
-rem ===================================
+call styles.bat %*
 
 set /a fore=3+6*0%bright_background%
 set /a back=4+6*0%bright_background%
@@ -39,5 +27,4 @@ net session 1>nul 2>nul && set cd_back=%cd_back_admin%
 
 call "%PL_DIR%update.bat"
 
-for /f "tokens=*" %%i in ('ver') do echo %%i
-echo (c) Microsoft Corporation. All rights reserved.
+if exist header.bat call header.bat
