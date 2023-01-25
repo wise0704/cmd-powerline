@@ -1,17 +1,5 @@
 goto :select_%1
 
-:select_p
-call :p_default
-:apply_next_profile
-shift
-if not "%1" == "" call :p_%1 & goto :apply_next_profile
-exit /b
-
-:select_s
-set arg=%2
-for %%i in (%arg:-= %) do call :s_%%i
-exit /b
-
 rem =============================================
 rem                   PROFILES
 rem =============================================
@@ -116,3 +104,22 @@ goto :eof
 set text=%text:$S=%
 set text=%text: =%
 goto :eof
+
+
+
+rem =============================================
+rem DO NOT EDIT BELOW!!!
+
+:select_p
+call :p_default
+:apply_next_profile
+shift
+if not "%1" == "" call :p_%1 & goto :apply_next_profile
+exit /b
+
+:select_s
+set arg=%2
+for %%i in (%arg:-= %) do call :s_%%i
+exit /b
+
+rem =============================================
