@@ -1,6 +1,22 @@
 @echo off
 %*
-setlocal
-set PL_GIT=
-for /f %%i in ('git branch --show-current 2^>nul') do set PL_GIT=%PL_GIT_S%%%i%PL_GIT_E%
-endlocal & prompt %PL_CD%%PL_GIT%%PL_END%
+setlocal EnableDelayedExpansion
+prompt
+for /l %%i in (0,1,%PL_I%) do (
+    if defined PL_V[%%i] (
+        call :invoke_and_append %%i
+    ) else (
+        prompt !PROMPT!!PL_P[%%i]!
+    )
+)
+endlocal & call prompt %PROMPT%
+exit /b
+
+:invoke_and_append (index) -> var, cmd, text, PROMPT
+    set var=!PL_V[%1]!
+    set "cmd=!PL_C[%1]!"
+    set text=!PL_P[%1]!
+    for /f %var% in (%cmd%) do (
+        prompt %PROMPT%%text%
+    )
+    goto :eof

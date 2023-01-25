@@ -1,74 +1,110 @@
-call :default
-:args
-if "%~1" == "" exit /b
-call :%~1 2>nul
+goto :select_%1
+
+:select_p
+call :p_default
+:apply_next_profile
 shift
-goto :args
+if not "%1" == "" call :p_%1 & goto :apply_next_profile
+exit /b
+
+:select_s
+set arg=%2
+for %%i in (%arg:-= %) do call :s_%%i
+exit /b
 
 rem =============================================
-rem ============= Customize below ===============
+rem                   PROFILES
 rem =============================================
 
-:default
-set cd_fore=0
-set cd_back=6
-set cd_back_admin=1
-set git_fore=0
-set git_back=3
-set cd_leading=$S
-set cd_trailing=$S
-set git_leading=$S$S
-set git_trailing=$S
+:p_default
+net session 1>nul 2>nul && (
+    set segments=cwd:01+ git:03+
+) || (
+    set segments=cwd:06+ git:03+
+)
+set separator=
 set margin=$S
-set bright_background=1
 goto :eof
 
-:compact
-set cd_leading=
-set cd_trailing=
-set git_leading=
-set git_trailing=
+:p_compact
+set segments=%segments::=-compact:%
 set margin=
 goto :eof
 
-:new_line
+:p_detailed
+set segments=user:02+ os:05+ %segments%
+goto :eof
+
+:p_padded
+set segments=empty %segments%
+goto :eof
+
+:p_dark
+set segments=%segments:+=%
+goto :eof
+
+:p_round
+set separator=
+goto :eof
+
+:p_angle_b
+set separator=
+goto :eof
+
+:p_angle_t
+set separator=
+goto :eof
+
+:p_flames
+set separator=
+goto :eof
+
+:p_pixel
+set separator=
+goto :eof
+
+:p_spikes
+set separator=
+goto :eof
+
+:p_newline
 set margin=$_$G$S
 goto :eof
 
-:bash
+:p_dollar
 set margin=$_$$$S
 goto :eof
 
-:dark
-set bright_background=0
+rem =============================================
+rem                   SEGMENTS
+rem =============================================
+
+:s_empty
 goto :eof
 
-:color_1
-rem set cd_fore=
-set cd_back=4
-rem set cd_back_admin=
-rem set git_fore=
-rem set git_back=
+:s_user
+set text=$S%USERNAME%@%COMPUTERNAME%$S
 goto :eof
 
-:color_2
-rem set cd_fore=
-rem set cd_back=
-rem set cd_back_admin=
-rem set git_fore=
-rem set git_back=
+:s_os
+set text=$S%OS%$S
 goto :eof
 
-:custom_1
-rem set cd_fore=
-rem set cd_back=
-rem set cd_back_admin=
-rem set git_fore=
-rem set git_back=
-rem set cd_leading=
-rem set cd_trailing=
-rem set git_leading=
-rem set git_trailing=
-rem set margin=
-rem set bright_background=
+:s_session
+set text=$S%%SESSIONNAME%%$S
+goto :eof
+
+:s_cwd
+set text=$S$P$S
+goto :eof
+
+:s_git
+set var="tokens=*" %%i
+set "cmd='git branch --show-current 2^>nul'"
+set text=$S$S%%i$S
+goto :eof
+
+:s_compact
+set text=%text:$S=%
+set text=%text: =%
 goto :eof
