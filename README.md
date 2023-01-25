@@ -1,16 +1,21 @@
 # CMD Powerline
 
 ## Introduction
+
 Simple and easily customisable Powerline for Windows Command Prompt.
 
-![default](https://user-images.githubusercontent.com/13545633/214132836-0bfe0be8-77ac-45ea-86b3-382cc31cc179.png)  
-![compact](https://user-images.githubusercontent.com/13545633/214176152-e115b2b1-9bad-4b4c-b9b0-d29259f3497d.png)  
-![color_1 new_line](https://user-images.githubusercontent.com/13545633/214133005-1fd7ecb8-7dba-4c06-8e5e-4e768ac85eab.png)  
-![color_2 bash](https://user-images.githubusercontent.com/13545633/214133105-09c96a5a-05b3-4bc2-b587-c8bf226f1a2b.png)
+![image](https://user-images.githubusercontent.com/13545633/214640756-e2938b6e-eea3-4185-a76e-2382a7978170.png)  
+![image](https://user-images.githubusercontent.com/13545633/214642717-24604c13-5084-4286-9707-80be036e99b4.png)  
+![image](https://user-images.githubusercontent.com/13545633/214641365-afc0c073-25f2-4fad-bdba-1db1fbf254a4.png)  
+![image](https://user-images.githubusercontent.com/13545633/214640881-fd7a4c17-d227-4f58-9a2c-ae612a5a0cd4.png)  
+![image](https://user-images.githubusercontent.com/13545633/214642264-e816e6a0-61d9-45c2-adb8-6a8e3aa01aa7.png)  
+![image](https://user-images.githubusercontent.com/13545633/214641667-9c75a329-ffad-4ff9-beb0-bf5cc853239a.png)  
+![image](https://user-images.githubusercontent.com/13545633/214643484-90009f51-11eb-42b9-8b0b-eb6bf64a17ca.png)  
+![image](https://user-images.githubusercontent.com/13545633/214642019-41528144-7a79-4939-937e-dfd2ebae3a84.png)
 
 ## Setup
 
-**Prerequisite**: A font supporting Powerline needs to be installed.
+**Prerequisite**: A font supporting Powerline symbols needs to be installed.
 
 Firstly, [clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to a desired location.
 For example, under `%HOME%\.cmd\`.
@@ -18,28 +23,27 @@ For example, under `%HOME%\.cmd\`.
 > You could also manually download the repository as a .zip file and extract to the desired location.
 However, you will have to repeat this process instead of a `git pull` if there are any updates to the files.
 
-Now, all you have to do is: whenever you want to call `cmd` for an interactive window, call `cmd /k "path\to\repo\cmd-powerline\init.cmd"` instead.
-Make sure `path\to\repo` is the location you cloned the repository into.
+Now, all you have to do is: whenever you want to call `cmd` for an interactive window, call `cmd /k "path\to\cmd-powerline\init.cmd"` instead.
+Make sure `path\to\cmd-powerline` is the location you cloned the repository into.
 
-You can append extra arguments to customise the styles of each instance for different occasions. See [configuring `styles.cmd`](#stylescmd).
+You can append extra arguments to select the style profiles of each instance for different occasions. See [configuring `styles.cmd`](#stylescmd).
 
 ### Example: Windows Terminal
+
 1. Open settings, and navigate to the "Command Prompt" profile.
-2. Change the "Command line" value from `...\cmd.exe` to `...\cmd.exe /k "path\to\repo\cmd-powerline\init.cmd"`.
+2. Change the "Command line" value from `...\cmd.exe` to `...\cmd.exe /k "path\to\cmd-powerline\init.cmd"`.
 3. Save the changes.
 
-![image](https://user-images.githubusercontent.com/13545633/214117106-f94b7e81-9951-42f4-ab4a-55fd69564790.png)
-
 ### Example: VS Code
+
 1. Open settings, and navigate to Terminal > Integrated > Profiles: Windows (`"terminal.integrated.profiles.windows"`).
 2. Edit the value in `settings.json`.
-3. Modify `"args"` of `"Command Prompt"`
-to `["/k", "path\\to\\repo\\cmd-powerline\\init.cmd"]`.
-Make sure the backslashes are escaped in the JSON file.
+3. Modify `"args"` of `"Command Prompt"` to `["/k", "path\\to\\cmd-powerline\\init.cmd"]`.
 
-![image](https://user-images.githubusercontent.com/13545633/214119298-71e537d7-d581-4afe-acb9-42b4f25dc1a6.png)
+   Make sure the backslashes are escaped in the JSON file.
 
-### (Not Recommended) Using Registry
+### _(Not Recommended)_ Using Registry
+
 Optionally, you can add/modify the `HKLM | HKCU \Software\Microsoft\Command Processor\AutoRun` key to run `init.cmd`.
 This way, any instance of a Command Prompt window will have the Powerline set up.
 
@@ -53,6 +57,7 @@ as the original header text will be displayed as usual with this method.
 ## Configuration
 
 ### `header.cmd`
+
 This file is executed once when the `init.cmd` is called.
 Since calling `cmd` with the argument `/k` skips the header text that would normally be displayed upon opening a new Command Prompt window,
 the default behaviour of the file is to mimic the header text.
@@ -60,22 +65,75 @@ the default behaviour of the file is to mimic the header text.
 If you prefer to have a different header text or no header at all, simply edit or delete this file.
 
 ### `styles.cmd`
-This is where you can customise the styles in detail, such as colours and leading/trailing characters.
 
-The default configuration is set under the `:default` label.
+This is where you can customise the styles in detail.
+The configuration is done in two parts: profiles and segments.
 
- - The prefix `cd` means the directory part of the prompt text, and `git` means the git branch indicator.
- - Colors can be chosen from the range 0-7. See [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit).
- - Leading and trailing characters and margin can use the special characters for `PROMPT`. See [microsoft docs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prompt#remarks).
- - Bright background uses the brigher version of the 3-bit colour pallet for the background (4-bit colours).
+Segments are the definitions of sections of text, and profiles are the definitions of how to arrange the segments plus other configurations.
 
-The labels are the arguments that you can pass to `init.cmd`, in which case the labels will be visited in the order they were entered.
+When initialisation is done by calling `init.cmd`, by default it loads the `p_default` profile. Additional profile names as arguments to `init.cmd` (without the prefix "`p_`") will apply the profiles in the order.
 
-For example, entering `/k init.cmd compact color_1 new_line` applies `:default`, `:compact`, `:color_1` and `:new_line` in that order.
+> For example, `init.cmd detailed newline` will apply `p_default`, `p_detailed` and `p_newline` profiles in that order.
+
+You can add/edit individual profiles and sections, including the default profile.
+
+#### Profiles
+
+- `segments`: A space separated list of `segments:color`.
+  - Multiple segment names can be applied with the `-` delimiter (without the prefix "`s_`").
+  - Two digits of 0-7 for foreground and background 3-bit colour codes.
+  Each digit can be followed by an optional `+` to use the brighter 4-bit colours.
+  See [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit).
+
+  > For example, `cwd-compact:04+` means to apply segments `s_cwd` and `s_compact` in that order, with a black foreground (30) and a bright blue background (104).
+- `separator`: A character to append at the end of each section. For example, the right-facing-triangle character `U+E0B0`.
+- `margin`: String to append to the end of the powerline. Usually a space or a newline followed by a '>' or '$'. Use the escape characters of `PROMPT`.
+See [microsoft docs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prompt#remarks).
+
+#### Segments
+
+- `text`: The text of the segment. Special characters need to be escaped using the `PROMPT` escape characters.
+See [microsoft docs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prompt#remarks). More information below.
+- `var`: Dynamic evaluation variable. More information below.
+- `cmd`: Dynamic evaluation command. More information below.
+- `fore` (Optional):
+- `back` (Optional): The default foreground/background colours for the segment. They will be overridden by the explicit colour specifiers of profiles.
+
+Segments can have constants, variables or dynamic evaluations.
+
+- A constant segment has a constant text that is evaluated at the initialisation phase.
+
+  > For example, `text=$S%USERNAME%@%COMPUTERNAME%$S`.
+
+  The variables `%USERNAME%` and `%COMPUTERNAME%` are evaluated only once when the script is loaded.
+- Segments can also have variables that are evaluated on [update](#how-it-works).
+They need to have their `%`s doubled to escape evaluation on initialisation.
+
+  > For example, `text=$S%%DATE%%$S`.
+- Dynamic evaluations have three parts: variable, command and text. They are essentially evaluated by the `for /f` command.
+
+  ```cmd
+  for /f %var% in (%cmd%) do ...%text%
+  ```
+
+  Thus,
+  - `var` can contain the options for `for /f`.
+
+    >For example, `var="tokens=*" %%i`.
+
+    Note that `%` needs to be doubled within the batch script.
+  - `cmd` needs to be surrounded by single quotes `'...'`, or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`.
+  - `cmd` needs to have special characters escaped **twice**.
+    > For example,  
+    `set "cmd='git branch 2^>nul'"` or  
+    `set cmd='git branch 2^^^>nul'`, instead of  
+    `set cmd='git branch 2^>nul'` (will be syntax error on evaluation).
+  - `text` can then use the introduced variable(s).
+    > For example, `text=$S%%i$S`.
 
 ## How it works
-The script simply uses `DOSKEY` to hijack `"cd"` and `"git"`, so whenever they are run,
-`update.cmd` gets called to get the current git branch information. Limitations of `DOSKEY` thus apply here.
-For example, typing `cd..` instead of `cd ..` will not cause an update to the git branch information.
 
-Any extra variables introduced will have a `PL_` prefix. You can type `set PL_` to see the list.
+The script simply uses `DOSKEY` to hijack `"cd"` and `"git"`, so whenever they are run,
+`update.cmd` gets called to update the prompt text.
+
+Any variables introduced will have a `PL_` prefix. You can type `set PL_` to see the list.
