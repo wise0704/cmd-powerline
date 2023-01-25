@@ -31,6 +31,10 @@ set segments=%segments::=-compact:%
 set margin=
 goto :eof
 
+:p_stack
+set segments=%segments:cwd:=cwd_stack:%
+goto :eof
+
 :p_detailed
 set segments=user:02+ os:05+ %segments%
 goto :eof
@@ -82,6 +86,14 @@ rem =============================================
 :s_empty
 goto :eof
 
+:s_cwd
+set text=$S$P$S
+goto :eof
+
+:s_cwd_stack
+set text=$S$+$P$S
+goto :eof
+
 :s_user
 set text=$S%USERNAME%@%COMPUTERNAME%$S
 goto :eof
@@ -92,10 +104,6 @@ goto :eof
 
 :s_session
 set text=$S%%SESSIONNAME%%$S
-goto :eof
-
-:s_cwd
-set text=$S$P$S
 goto :eof
 
 :s_git

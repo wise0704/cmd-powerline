@@ -3,7 +3,12 @@
 if defined PL_CD if "%~1" == "" exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
-for %%i in (git cd cd. cd..) do (
+for %%i in (
+    git
+    cd cd..
+    pushd pushd..
+    popd
+) do (
     doskey %%i=call "%~dp0update.cmd" %%i $*
 )
 
