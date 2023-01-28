@@ -42,8 +42,8 @@ exit /b
     )
 
     setlocal EnableDelayedExpansion
-    set p=!PL_P[%PL_I%]!49m%~1$E[39m%~2
-    endlocal & set PL_P[%PL_I%]=%p%
+    set "p=!PL_P[%PL_I%]!49m%~1$E[39m%~2"
+    endlocal & set "PL_P[%PL_I%]=%p%"
 
     goto :eof
 
@@ -74,15 +74,15 @@ exit /b
 
     if not defined PL_P[0] (
         if defined text (
-            set p=$E[%f%;%b%m%text%$E[%t%;
+            set "p=$E[%f%;%b%m%text%$E[%t%;"
         ) else (
-            set p=$E[%t%;
+            set "p=$E[%t%;"
         )
     ) else (
         if defined text (
-            set p=!PL_P[%PL_I%]!%b%m%~1$E[%f%m%text%$E[%t%;
+            set "p=!PL_P[%PL_I%]!%b%m%~1$E[%f%m%text%$E[%t%;"
         ) else (
-            set p=!PL_P[%PL_I%]!%b%m%~1$E[%t%;
+            set "p=!PL_P[%PL_I%]!%b%m%~1$E[%t%;"
         )
     )
 
@@ -94,8 +94,8 @@ exit /b
     (
         endlocal
         set PL_P[%i%]=
-        set PL_P[%PL_I%]=%p%
-        set PL_V[%PL_I%]=%var%
+        set "PL_P[%PL_I%]=%p%"
+        set "PL_V[%PL_I%]=%var%"
         set "PL_C[%PL_I%]=%cmd%"
         set PL_I=%i%
     )
