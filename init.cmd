@@ -9,7 +9,7 @@ for %%i in (
     pushd pushd..
     popd
 ) do (
-    doskey %%i=call "%~dp0update.cmd" %%i $*
+    doskey %%i="%~dp0update.cmd" %%i $*
 )
 
 setlocal
