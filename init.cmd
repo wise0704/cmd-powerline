@@ -17,7 +17,11 @@ setlocal
 for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
 chcp 65001 >nul
 
-call "%~dp0styles.cmd" p %*
+if "%~1" == "" (
+    call "%~dp0styles.cmd" p default
+) else (
+    call "%~dp0styles.cmd" p %*
+)
 
 (
     endlocal

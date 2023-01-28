@@ -111,10 +111,8 @@ rem =============================================
 rem DO NOT EDIT BELOW!!!
 
 :select_p
-call :p_default
-:apply_next_profile
 shift
-if not "%1" == "" call :p_%1 & goto :apply_next_profile
+if not "%1" == "" call :p_%1 & goto :select_p
 exit /b
 
 :select_s

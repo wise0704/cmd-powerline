@@ -73,7 +73,7 @@ Segments are the definitions of sections of text, and profiles are the definitio
 
 When initialisation is done by calling `init.cmd`, by default it loads the `p_default` profile. Additional profile names as arguments to `init.cmd` (without the prefix "`p_`") will apply the profiles in the order.
 
-> For example, `init.cmd detailed newline` will apply `p_default`, `p_detailed` and `p_newline` profiles in that order.
+> For example, `init.cmd default detailed newline` will apply `p_default`, `p_detailed` and `p_newline` profiles in that order.
 
 You can add/edit individual profiles and sections, including the default profile.
 
