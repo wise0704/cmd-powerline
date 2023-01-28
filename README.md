@@ -5,13 +5,12 @@
 Simple and easily customisable Powerline for Windows Command Prompt.
 
 ![image](https://user-images.githubusercontent.com/13545633/214640756-e2938b6e-eea3-4185-a76e-2382a7978170.png)  
-![image](https://user-images.githubusercontent.com/13545633/214642717-24604c13-5084-4286-9707-80be036e99b4.png)  
 ![image](https://user-images.githubusercontent.com/13545633/214641365-afc0c073-25f2-4fad-bdba-1db1fbf254a4.png)  
-![image](https://user-images.githubusercontent.com/13545633/214640881-fd7a4c17-d227-4f58-9a2c-ae612a5a0cd4.png)  
-![image](https://user-images.githubusercontent.com/13545633/214642264-e816e6a0-61d9-45c2-adb8-6a8e3aa01aa7.png)  
-![image](https://user-images.githubusercontent.com/13545633/214641667-9c75a329-ffad-4ff9-beb0-bf5cc853239a.png)  
-![image](https://user-images.githubusercontent.com/13545633/214643484-90009f51-11eb-42b9-8b0b-eb6bf64a17ca.png)  
-![image](https://user-images.githubusercontent.com/13545633/214642019-41528144-7a79-4939-937e-dfd2ebae3a84.png)
+![image](https://user-images.githubusercontent.com/13545633/214642717-24604c13-5084-4286-9707-80be036e99b4.png)  
+![image](https://user-images.githubusercontent.com/13545633/215236257-87afcebf-5b5b-4045-8c39-309bac8d0b7d.png)  
+![image](https://user-images.githubusercontent.com/13545633/215236604-60bc6807-cf65-4f1f-8488-2cad84f17d88.png)  
+![image](https://user-images.githubusercontent.com/13545633/215236670-771fd959-da8c-481b-8935-4f03a4107966.png)  
+![image](https://user-images.githubusercontent.com/13545633/215236785-8991518f-1083-42e0-8ff4-6cd52e47fbcd.png)
 
 ## Setup
 
