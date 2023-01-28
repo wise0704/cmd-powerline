@@ -123,7 +123,7 @@ They need to have their `%`s doubled to escape evaluation on initialisation.
 
     Note that `%` needs to be doubled within the batch script.
   - `cmd` needs to be surrounded by single quotes `'...'`, or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`.
-  - `cmd` needs to have special characters escaped **twice**.
+  - `cmd` needs to have special characters (``%^&<>|'`,;=()!``) escaped **twice**.
     > For example,  
     `set "cmd='git branch 2^>nul'"` or  
     `set cmd='git branch 2^^^>nul'`, instead of  
