@@ -42,7 +42,7 @@ exit /b
     set PL_C[0]=
 
     for %%i in (%~3) do (
-        call :build_segment %1 "%%i"
+        call :build_segment %1 %%i
     )
 
     setlocal EnableDelayedExpansion
@@ -51,7 +51,7 @@ exit /b
 
     goto :eof
 
-:build_segment ("separator", "segment") -> PL_I, PL_P[], PL_V[], PL_C[]
+:build_segment ("separator", segment) -> PL_I, PL_P[], PL_V[], PL_C[]
     setlocal EnableDelayedExpansion
 
     set fore=0
@@ -60,8 +60,12 @@ exit /b
     set cmd=
     set text=
 
-    for /f "delims=: tokens=1,*" %%i in (%2) do (
-        call "%~dp0styles.cmd" s %%i
+    for /f "delims=: tokens=1,*" %%i in ("%2") do (
+        if [%%i] == [%%~i] (
+            call "%~dp0styles.cmd" s %%i
+        ) else (
+            set text=%%~i
+        )
         call :color %%j
     )
 

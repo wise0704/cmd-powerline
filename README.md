@@ -14,7 +14,7 @@ Simple and easily customisable Powerline for Windows Command Prompt.
 
 ## Setup
 
-**Prerequisite**: A font supporting Powerline symbols needs to be installed.
+> **Prerequisite**: A font supporting Powerline symbols needs to be installed.
 
 Firstly, [clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to a desired location.
 For example, under `%HOME%\.cmd\`.
@@ -68,9 +68,10 @@ If you prefer to have a different header text or no header at all, simply edit o
 This is where you can customise the styles in detail.
 The configuration is done in two parts: profiles and segments.
 
-Segments are the definitions of sections of text, and profiles are the definitions of how to arrange the segments plus other configurations.
+Segments are the definitions of sections of text, and profiles are the definitions of how to arrange the segments.
 
-When initialisation is done by calling `init.cmd`, by default it loads the `p_default` profile. Additional profile names as arguments to `init.cmd` (without the prefix "`p_`") will apply the profiles in the order.
+When initialisation is done by calling `init.cmd` with no arguments, it loads the `p_default` profile.
+Profile names passed as arguments to `init.cmd` (without the prefix "`p_`") will apply the profiles in the order.
 
 > For example, `init.cmd default detailed newline` will apply `p_default`, `p_detailed` and `p_newline` profiles in that order.
 
@@ -78,23 +79,26 @@ You can add/edit individual profiles and sections, including the default profile
 
 #### Profiles
 
-- `segments`: A space separated list of `segments:color`.
-  - Multiple segment names can be applied with the `-` delimiter (without the prefix "`s_`").
+- `segments`: A space-separated list of `segments:color` or `"text":color`.
+  - Multiple segment definitions can be joined with the `-` delimiter (without the prefix "`s_`").
+  - Text can be entered directly using double quotes instead of a segment name.
   - Two digits of 0-7 for foreground and background 3-bit colour codes.
   Each digit can be followed by an optional `+` to use the brighter 4-bit colours.
   See [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit).
 
   > For example, `cwd-compact:04+` means to apply segments `s_cwd` and `s_compact` in that order, with a black foreground (30) and a bright blue background (104).
+
+  - Colour can be ommited, in which case it defaults to either the colours specified in the segment definition, or `00`.
 - `separator`: A character to append at the end of each section. For example, the right-facing-triangle character `U+E0B0`.
-- `margin`: String to append to the end of the powerline. Usually a space or a newline followed by a '>' or '$'. Use the escape characters of `PROMPT`.
+- `margin`: String to append to the end of the powerline. Usually a space, or a newline followed by a '>' or '$'. Use the escape characters of `PROMPT`.
 See [microsoft docs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prompt#remarks).
 
 #### Segments
 
 - `text`: The text of the segment. Special characters need to be escaped using the `PROMPT` escape characters.
 See [microsoft docs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prompt#remarks). More information below.
-- `var`: Dynamic evaluation variable. More information below.
-- `cmd`: Dynamic evaluation command. More information below.
+- `var` (Optional): Dynamic evaluation variable. More information below.
+- `cmd` (Optional): Dynamic evaluation command. More information below.
 - `fore` (Optional):
 - `back` (Optional): The default foreground/background colours for the segment. They will be overridden by the explicit colour specifiers of profiles.
 
@@ -121,7 +125,7 @@ They need to have their `%`s doubled to escape evaluation on initialisation.
     >For example, `var="tokens=*" %%i`.
 
     Note that `%` needs to be doubled within the batch script.
-  - `cmd` needs to be surrounded by single quotes `'...'`, or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`.
+  - `cmd` needs to be surrounded by single quotes `'...'` (or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`).
   - `cmd` needs to have special characters (``%^&<>|'`,;=()!``) escaped **twice**.
     > For example,  
     `set "cmd='git branch 2^>nul'"` or  
