@@ -1,6 +1,6 @@
 @echo off
 
-if defined PL_CD if "%~1" == "" exit /b
+if defined PL_I if "%~1" == "" exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
 for %%i in (
