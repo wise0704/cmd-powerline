@@ -6,9 +6,9 @@ Simple and easily customisable Powerline for Windows Command Prompt.
 
 ![image](https://user-images.githubusercontent.com/13545633/214640756-e2938b6e-eea3-4185-a76e-2382a7978170.png)  
 ![image](https://user-images.githubusercontent.com/13545633/214641365-afc0c073-25f2-4fad-bdba-1db1fbf254a4.png)  
-![image](https://user-images.githubusercontent.com/13545633/214642717-24604c13-5084-4286-9707-80be036e99b4.png)  
+![image](https://user-images.githubusercontent.com/13545633/215299932-c60759d1-6123-4b6e-98e4-18e9b237867f.png)  
 ![image](https://user-images.githubusercontent.com/13545633/215236257-87afcebf-5b5b-4045-8c39-309bac8d0b7d.png)  
-![image](https://user-images.githubusercontent.com/13545633/215236604-60bc6807-cf65-4f1f-8488-2cad84f17d88.png)  
+![image](https://user-images.githubusercontent.com/13545633/215237326-b653f58f-8ddd-4249-a853-cf7ee935f616.png)  
 ![image](https://user-images.githubusercontent.com/13545633/215236670-771fd959-da8c-481b-8935-4f03a4107966.png)  
 ![image](https://user-images.githubusercontent.com/13545633/215236785-8991518f-1083-42e0-8ff4-6cd52e47fbcd.png)
 
