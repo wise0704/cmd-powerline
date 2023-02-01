@@ -15,7 +15,7 @@ for %%i in (
 
 setlocal
 
-for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
+for /f "tokens=2 delims=:" %%i in ('chcp') do set cp=%%i
 chcp 65001 >nul
 
 if "%~1" == "" (
@@ -69,7 +69,7 @@ exit /b
     set cmd=
     set text=
 
-    for /f "delims=: tokens=1,*" %%i in ("%2") do (
+    for /f "tokens=1,* delims=:" %%i in ("%2") do (
         if [%%i] == [%%~i] (
             call "%~dp0styles.cmd" s %%i
         ) else (
