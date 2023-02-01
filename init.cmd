@@ -82,12 +82,12 @@ exit /b
     set /a t=%back% + 30
     set /a b=%back% + 40
 
-    set i=%PL_I%
     if defined var if defined cmd (
-        if defined PL_P[%i%] (
-            set /a i+=1
+        if defined PL_P[%PL_I%] (
+            set /a PL_I+=1
         )
     )
+    set i=%PL_I%
 
     if not defined PL_P[0] (
         if defined text (
@@ -104,14 +104,14 @@ exit /b
     )
 
     if defined var if defined cmd (
-        set /a i+=1
+        set /a PL_I+=1
     )
 
     ( endlocal
         set "PL_P[%i%]=%p%"
         set "PL_V[%i%]=%var%"
         set "PL_C[%i%]=%cmd%"
-        set PL_I=%i%
+        set PL_I=%PL_I%
     )
     goto :eof
 
