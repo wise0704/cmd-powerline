@@ -1,7 +1,8 @@
 @echo off
 
-if defined PL_I if "%~1" == "" exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
+
+if defined PL_I call :clear_variables
 
 for %%i in (
     git
@@ -14,7 +15,7 @@ for %%i in (
 
 setlocal
 
-for /f "delims=: tokens=2" %%i in ('chcp') do set cp=%%i
+for /f "tokens=2 delims=:" %%i in ('chcp') do set cp=%%i
 chcp 65001 >nul
 
 if "%~1" == "" (
@@ -23,8 +24,7 @@ if "%~1" == "" (
     call "%~dp0styles.cmd" p %*
 )
 
-(
-    endlocal
+( endlocal
     call :build_prompt "%separator%" "%margin%" "%segments%"
     chcp %cp% >nul
 )
@@ -34,6 +34,15 @@ call "%~dp0update.cmd"
 if exist "%~dp0header.cmd" call "%~dp0header.cmd"
 
 exit /b
+
+:clear_variables () -> PL_I, PL_P[], PL_V[], PL_C[]
+    for /l %%i in (0,1,%PL_I%) do (
+        set PL_P[%%i]=
+        set PL_V[%%i]=
+        set PL_C[%%i]=
+    )
+    set PL_I=
+    goto :eof
 
 :build_prompt ("separator", "margin", "segments") -> PL_I, PL_P[], PL_V[], PL_C[]
     set PL_I=0
@@ -60,7 +69,7 @@ exit /b
     set cmd=
     set text=
 
-    for /f "delims=: tokens=1,*" %%i in ("%2") do (
+    for /f "tokens=1,* delims=:" %%i in ("%2") do (
         if [%%i] == [%%~i] (
             call "%~dp0styles.cmd" s %%i
         ) else (
@@ -75,10 +84,10 @@ exit /b
 
     if defined var if defined cmd (
         if defined PL_P[%PL_I%] (
-            set /a PL_I=%PL_I% + 1
-            set PL_P[!PL_I!]=
+            set /a PL_I+=1
         )
     )
+    set i=%PL_I%
 
     if not defined PL_P[0] (
         if defined text (
@@ -88,24 +97,21 @@ exit /b
         )
     ) else (
         if defined text (
-            set "p=!PL_P[%PL_I%]!%b%m%~1$E[%f%m%text%$E[%t%;"
+            set "p=!PL_P[%i%]!%b%m%~1$E[%f%m%text%$E[%t%;"
         ) else (
-            set "p=!PL_P[%PL_I%]!%b%m%~1$E[%t%;"
+            set "p=!PL_P[%i%]!%b%m%~1$E[%t%;"
         )
     )
 
-    set i=%PL_I%
     if defined var if defined cmd (
-        set /a i=%PL_I% + 1
+        set /a PL_I+=1
     )
 
-    (
-        endlocal
-        set PL_P[%i%]=
-        set "PL_P[%PL_I%]=%p%"
-        set "PL_V[%PL_I%]=%var%"
-        set "PL_C[%PL_I%]=%cmd%"
-        set PL_I=%i%
+    ( endlocal
+        set "PL_P[%i%]=%p%"
+        set "PL_V[%i%]=%var%"
+        set "PL_C[%i%]=%cmd%"
+        set PL_I=%PL_I%
     )
     goto :eof
 
