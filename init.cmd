@@ -1,7 +1,8 @@
 @echo off
 
-if defined PL_I if "%~1" == "" exit /b
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
+
+if defined PL_I call :clear_variables
 
 for %%i in (
     git
@@ -23,8 +24,7 @@ if "%~1" == "" (
     call "%~dp0styles.cmd" p %*
 )
 
-(
-    endlocal
+( endlocal
     call :build_prompt "%separator%" "%margin%" "%segments%"
     chcp %cp% >nul
 )
@@ -34,6 +34,15 @@ call "%~dp0update.cmd"
 if exist "%~dp0header.cmd" call "%~dp0header.cmd"
 
 exit /b
+
+:clear_variables () -> PL_I, PL_P[], PL_V[], PL_C[]
+    for /l %%i in (0,1,%PL_I%) do (
+        set PL_P[%%i]=
+        set PL_V[%%i]=
+        set PL_C[%%i]=
+    )
+    set PL_I=
+    goto :eof
 
 :build_prompt ("separator", "margin", "segments") -> PL_I, PL_P[], PL_V[], PL_C[]
     set PL_I=0
@@ -73,10 +82,10 @@ exit /b
     set /a t=%back% + 30
     set /a b=%back% + 40
 
+    set i=%PL_I%
     if defined var if defined cmd (
-        if defined PL_P[%PL_I%] (
-            set /a PL_I=%PL_I% + 1
-            set PL_P[!PL_I!]=
+        if defined PL_P[%i%] (
+            set /a i+=1
         )
     )
 
@@ -88,23 +97,20 @@ exit /b
         )
     ) else (
         if defined text (
-            set "p=!PL_P[%PL_I%]!%b%m%~1$E[%f%m%text%$E[%t%;"
+            set "p=!PL_P[%i%]!%b%m%~1$E[%f%m%text%$E[%t%;"
         ) else (
-            set "p=!PL_P[%PL_I%]!%b%m%~1$E[%t%;"
+            set "p=!PL_P[%i%]!%b%m%~1$E[%t%;"
         )
     )
 
-    set i=%PL_I%
     if defined var if defined cmd (
-        set /a i=%PL_I% + 1
+        set /a i+=1
     )
 
-    (
-        endlocal
-        set PL_P[%i%]=
-        set "PL_P[%PL_I%]=%p%"
-        set "PL_V[%PL_I%]=%var%"
-        set "PL_C[%PL_I%]=%cmd%"
+    ( endlocal
+        set "PL_P[%i%]=%p%"
+        set "PL_V[%i%]=%var%"
+        set "PL_C[%i%]=%cmd%"
         set PL_I=%i%
     )
     goto :eof
