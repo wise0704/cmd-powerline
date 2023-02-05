@@ -78,10 +78,6 @@ exit /b
         call :color %%j
     )
 
-    set /a f=%fore% + 30
-    set /a t=%back% + 30
-    set /a b=%back% + 40
-
     if defined var if defined cmd (
         if defined PL_P[%PL_I%] (
             set /a PL_I+=1
@@ -91,15 +87,15 @@ exit /b
 
     if not defined PL_P[0] (
         if defined text (
-            set "p=$E[%f%;%b%m%text%$E[%t%;"
+            set "p=$E[38;%fore%;48;%back%m%text%$E[38;%back%;"
         ) else (
-            set "p=$E[%t%;"
+            set "p=$E[38;%back%;"
         )
     ) else (
         if defined text (
-            set "p=!PL_P[%i%]!%b%m%~1$E[%f%m%text%$E[%t%;"
+            set "p=!PL_P[%i%]!48;%back%m%~1$E[38;%fore%m%text%$E[38;%back%;"
         ) else (
-            set "p=!PL_P[%i%]!%b%m%~1$E[%t%;"
+            set "p=!PL_P[%i%]!48;%back%m%~1$E[38;%back%;"
         )
     )
 
@@ -119,15 +115,17 @@ exit /b
     if "%1" == "" goto :eof
     set back=%1
     if "%back:~1,1%" == "+" (
-        set fore=6%back:~0,1%
+        set /a fore=%back:~0,1% + 8
         set back=%back:~2%
     ) else (
-        set fore=%back:~0,1%
+        set /a fore=0x%back:~0,1%
         set back=%back:~1%
     )
     if "%back:~1,1%" == "+" (
-        set back=6%back:~0,1%
+        set /a back=%back:~0,1% + 8
     ) else (
-        set back=%back:~0,1%
+        set /a back=0x%back:~0,1%
     )
+    set fore=5;%fore%
+    set back=5;%back%
     goto :eof
