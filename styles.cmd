@@ -6,9 +6,9 @@ rem =============================================
 
 :p_default
 net session 1>nul 2>nul && (
-    set segments=cwd:01+ git:03+
+    set segments=cwd:01 git:03
 ) || (
-    set segments=cwd:06+ git:03+
+    set segments=cwd:06 git:03
 )
 set "separator="
 set "margin=$S"
@@ -51,19 +51,15 @@ set "margin=$S"
 goto :eof
 
 :p_-user
-set segments=user:02+ %segments%
+set segments=user:02 %segments%
 goto :eof
 
 :p_-os
-set segments=os:05+ %segments%
+set segments=os:0D %segments%
 goto :eof
 
 :p_-pad
 set segments="" %segments%
-goto :eof
-
-:p_-dark
-set segments=%segments:+=%
 goto :eof
 
 :p_-sep-round
@@ -123,9 +119,9 @@ set text=$S%%SESSIONNAME%%$S
 goto :eof
 
 :s_git
-set var="tokens=*" %%i
+set var="tokens=1,*" %%i
 set cmd='git branch 2^>nul ^| findstr /bc:"* "'
-set text=$S$S%%i$S
+set text=$S$S%%j$S
 goto :eof
 
 rem :s_my_script
