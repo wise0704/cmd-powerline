@@ -47,7 +47,7 @@ Optionally, you can add/modify the `HKLM | HKCU \Software\Microsoft\Command Proc
 This way, any instance of a Command Prompt window will have the Powerline set up.
 
 However, do note that modifying the AutoRun key is not recommended.
-Although code contains checks to ensure that `init.cmd` is not called recursively and will only run on an interactive window,
+Although code contains checks to ensure that `init.cmd` will only run on an interactive window,
 there may still be bugs due to the nature of the AutoRun key.
 
 > Additionally, you should modify or clear out the content of [`header.cmd`](#headercmd),
@@ -80,16 +80,23 @@ You can add/edit individual profiles and sections, including the default profile
 #### Profiles
 
 - `segments`: A space-separated list of `segments:color` or `"text":color`.
-  - Multiple segment definitions can be joined with the `-` delimiter (without the prefix "`s_`").
-  - Text can be entered directly using double quotes instead of a segment name.
-  - Two digits of 0-7 for foreground and background 3-bit colour codes.
-  Each digit can be followed by an optional `+` to use the brighter 4-bit colours.
-  See [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit).
+  - `segment`: Specify the segment name(s) without the prefix "`s_`". Multiple segments can be joined with the `-` delimiter.
 
-  > For example, `cwd-compact:04+` means to apply segments `s_cwd` and `s_compact` in that order, with a black foreground (30) and a bright blue background (104).
+  - `"text"`: Alternatively, text can be entered directly using double quotes.
+  However, this direct text cannot contain any special characters or variables holding special characters.
 
-  - Colour can be ommited, in which case it defaults to either the colours specified in the segment definition, or `00`.
-- `separator`: A character to append at the end of each section. For example, the right-facing-triangle character `U+E0B0`.
+  - `color`: A colour code pair for foreground and background.
+    See [wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit).
+    - Standard: A pair of 1-digit hexadecimal numbers &mdash; 0~7.
+    - High intensity: A pair of 1-digit hexadecimal numbers &mdash; 8~F.
+    - Grayscale: A pair of 2-digit octal numbers from black to white &mdash; 00~27.
+    - 666 cube: A pair of 3-digit heximal (base 6) numbers of RGB &mdash; 000~555.
+    - 24-bit: A pair of 6-digit hexadecimal numbers of RGB &mdash; 000000~FFFFFF
+
+    Colour can be ommited, in which case it defaults to either the colours specified in the segment definition, or `00`.
+
+- `separator`: A character to append at the end of each section. For example, the right-facing-triangle character `U+E0B0` (Powerline font symbol).
+
 - `margin`: String to append to the end of the powerline. Usually a space, or a newline followed by a '>' or '$'. Use the escape characters of `PROMPT`.
 See [microsoft docs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prompt#remarks).
 
@@ -122,13 +129,13 @@ They need to have their `%`s doubled to escape evaluation on initialisation.
   Thus,
   - `var` can contain the options for `for /f`.
 
-    >For example, `var="tokens=*" %%i`.
+    >For example, `var="tokens=1,2" %%i`.
 
     Note that `%` needs to be doubled within the batch script.
-  - `cmd` needs to be surrounded by single quotes `'...'` (or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`).
+  - `cmd` needs to be surrounded by single quotes `'...'`, or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`.
   - `cmd` needs to have special characters (``%^&<>|'`,;=()!``) escaped.
   - `text` can then use the introduced variable(s).
-    > For example, `text=$S%%i$S`.
+    > For example, `text=%%i-%%j`.
 
 ## How it works
 
