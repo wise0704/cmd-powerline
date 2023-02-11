@@ -116,7 +116,7 @@ They need to have their `%`s doubled to escape evaluation on initialisation.
 - Dynamic evaluations have three parts: variable, command and text. They are essentially evaluated by the `for /f` command.
 
   ```cmd
-  for /f %var% in (%cmd%) do ...%text%
+  for /f %var% in (!cmd!) do ...%text%
   ```
 
   Thus,
@@ -126,11 +126,7 @@ They need to have their `%`s doubled to escape evaluation on initialisation.
 
     Note that `%` needs to be doubled within the batch script.
   - `cmd` needs to be surrounded by single quotes `'...'` (or backticks `` `...` `` if the option `"usebackq"` is supplied in `var`).
-  - `cmd` needs to have special characters (``%^&<>|'`,;=()!``) escaped **twice**.
-    > For example,  
-    `set "cmd='git branch 2^>nul'"` or  
-    `set cmd='git branch 2^^^>nul'`, instead of  
-    `set cmd='git branch 2^>nul'` (will be syntax error on evaluation).
+  - `cmd` needs to have special characters (``%^&<>|'`,;=()!``) escaped.
   - `text` can then use the introduced variable(s).
     > For example, `text=$S%%i$S`.
 

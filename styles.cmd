@@ -124,12 +124,12 @@ goto :eof
 
 :s_git
 set var="tokens=*" %%i
-set "cmd='git branch --show-current 2^>nul'"
+set cmd='git branch 2^>nul ^| findstr /bc:"* "'
 set text=$S$S%%i$S
 goto :eof
 
 rem :s_my_script
-rem set var="tokens=*" %%i
+rem set var="delims=" %%i
 rem set cmd='"%~dp0scripts\my_script.cmd"'
 rem set text=$S%%i$S
 rem goto :eof
