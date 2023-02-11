@@ -6,10 +6,10 @@
     if defined PL_V[%%i] (
         call :invoke_and_append %%i
     ) else (
-        prompt !PROMPT!!PL_P[%%i]!
+        set "PROMPT=!PROMPT!!PL_P[%%i]!"
     )
 )
-@endlocal & call prompt %PROMPT%
+@endlocal & call set "PROMPT=%PROMPT%"
 @exit /b
 
 :invoke_and_append (index) -> var, cmd, text, PROMPT
@@ -17,6 +17,6 @@
     @set "cmd=!PL_C[%1]!"
     @set "text=!PL_P[%1]!"
     @for /f %var% in (%cmd%) do @(
-        prompt %PROMPT%%text%
+        set "PROMPT=%PROMPT%%text%"
     )
     @goto :eof
