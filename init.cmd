@@ -65,8 +65,8 @@ exit /b
 :build_segment ("separator", segment) -> PL_I, PL_P[], PL_V[], PL_C[]
     setlocal EnableDelayedExpansion
 
-    set fore=0
-    set back=0
+    set fore=5;0
+    set back=5;0
     set var=
     set cmd=
     set text=
