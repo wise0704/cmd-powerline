@@ -3,12 +3,14 @@
 echo "%cmdcmdline%" | find /i " /c " >nul && exit /b
 
 if defined PL_I call :clear_variables
+set PL_DIR=%~dp0
+set PL_ARGS=%*
 
 for %%i in (
-    git
     cd cd..
     pushd pushd..
     popd
+    git
 ) do (
     doskey %%i="%~dp0update.cmd" %%i $*
 )
