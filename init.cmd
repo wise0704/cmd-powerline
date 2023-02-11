@@ -125,15 +125,11 @@ exit /b
     if "%value:~5,1%" == "" (
         set /a fore=232+0%value:~1,2%
         set /a back=232+0%value:~3,2%
-        rem if !fore! gtr 255 ( set fore=255 ) else if !fore! lss 232 ( set fore=232 )
-        rem if !back! gtr 255 ( set back=255 ) else if !back! lss 232 ( set back=232 )
         goto :color_8bit
     )
     if "%value:~7,1%" == "" (
         set /a fore=16 + 36 * 0%value:~1,1% + 6 * 0%value:~2,1% + 0%value:~3,1%
         set /a back=16 + 36 * 0%value:~4,1% + 6 * 0%value:~5,1% + 0%value:~6,1%
-        rem if !fore! gtr 231 ( set fore=231 ) else if !fore! lss 16 ( set fore=16 )
-        rem if !back! gtr 231 ( set back=231 ) else if !back! lss 16 ( set back=16 )
         goto :color_8bit
     )
 
