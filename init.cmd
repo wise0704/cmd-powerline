@@ -65,8 +65,8 @@ exit /b
 :build_segment ("separator", segment) -> PL_I, PL_P[], PL_V[], PL_C[]
     setlocal EnableDelayedExpansion
 
-    set fore=5;0
-    set back=5;0
+    set fore=
+    set back=
     set var=
     set cmd=
     set text=
@@ -114,20 +114,44 @@ exit /b
     goto :eof
 
 :color ([value]) -> fore, back
-    if "%1" == "" goto :eof
-    set back=%1
-    if "%back:~1,1%" == "+" (
-        set /a fore=%back:~0,1% + 8
-        set back=%back:~2%
-    ) else (
-        set /a fore=0x%back:~0,1%
-        set back=%back:~1%
+    setlocal EnableDelayedExpansion
+
+    set value=#%1
+    if "%value:~3,1%" == "" (
+        set /a fore=0x0%value:~1,1%
+        set /a back=0x0%value:~2,1%
+        goto :color_8bit
     )
-    if "%back:~1,1%" == "+" (
-        set /a back=%back:~0,1% + 8
-    ) else (
-        set /a back=0x%back:~0,1%
+    if "%value:~5,1%" == "" (
+        set /a fore=232+0%value:~1,2%
+        set /a back=232+0%value:~3,2%
+        rem if !fore! gtr 255 ( set fore=255 ) else if !fore! lss 232 ( set fore=232 )
+        rem if !back! gtr 255 ( set back=255 ) else if !back! lss 232 ( set back=232 )
+        goto :color_8bit
     )
-    set fore=5;%fore%
-    set back=5;%back%
+    if "%value:~7,1%" == "" (
+        set /a fore=16 + 36 * 0%value:~1,1% + 6 * 0%value:~2,1% + 0%value:~3,1%
+        set /a back=16 + 36 * 0%value:~4,1% + 6 * 0%value:~5,1% + 0%value:~6,1%
+        rem if !fore! gtr 231 ( set fore=231 ) else if !fore! lss 16 ( set fore=16 )
+        rem if !back! gtr 231 ( set back=231 ) else if !back! lss 16 ( set back=16 )
+        goto :color_8bit
+    )
+
+    set /a fr=0x0%value:~1,2%
+    set /a fg=0x0%value:~3,2%
+    set /a fb=0x0%value:~5,2%
+    set /a br=0x0%value:~7,2%
+    set /a bg=0x0%value:~9,2%
+    set /a bb=0x0%value:~11,2%
+    ( endlocal
+        set fore=2;%fr%;%fg%;%fb%
+        set back=2;%br%;%bg%;%bb%
+    )
+    goto :eof
+
+    :color_8bit
+    ( endlocal
+        set fore=5;%fore%
+        set back=5;%back%
+    )
     goto :eof
