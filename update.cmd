@@ -16,7 +16,7 @@
     @set "var=!PL_V[%1]!"
     @set "cmd=!PL_C[%1]!"
     @set "text=!PL_P[%1]!"
-    @for /f %var% in (%cmd%) do @(
+    @for /f %var% in (!cmd!) do @(
         set "PROMPT=%PROMPT%%text%"
     )
     @goto :eof
