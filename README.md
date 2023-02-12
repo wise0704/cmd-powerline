@@ -93,7 +93,7 @@ You can add/edit individual profiles and sections, including the default profile
     - 666 cube: A pair of 3-digit heximal (base 6) numbers of RGB &mdash; 000~555.
     - 24-bit: A pair of 6-digit hexadecimal numbers of RGB &mdash; 000000~FFFFFF
 
-    Colour can be ommited, in which case it defaults to either the colours specified in the segment definition, or `00`.
+    Colour can be omitted, in which case it defaults to either the colours specified in the segment definition, or `00`.
 
 - `separator`: A character to append at the end of each section. For example, the right-facing-triangle character `U+E0B0` (Powerline font symbol).
 
