@@ -65,8 +65,8 @@ exit /b
 :build_segment ("separator", segment) -> PL_I, PL_P[], PL_V[], PL_C[]
     setlocal EnableDelayedExpansion
 
-    set fore=0
-    set back=0
+    set fore=
+    set back=
     set var=
     set cmd=
     set text=
@@ -80,10 +80,6 @@ exit /b
         call :color %%j
     )
 
-    set /a f=%fore% + 30
-    set /a t=%back% + 30
-    set /a b=%back% + 40
-
     if defined var if defined cmd (
         if defined PL_P[%PL_I%] (
             set /a PL_I+=1
@@ -93,15 +89,15 @@ exit /b
 
     if not defined PL_P[0] (
         if defined text (
-            set "p=$E[%f%;%b%m%text%$E[%t%;"
+            set "p=$E[38;%fore%;48;%back%m%text%$E[38;%back%;"
         ) else (
-            set "p=$E[%t%;"
+            set "p=$E[38;%back%;"
         )
     ) else (
         if defined text (
-            set "p=!PL_P[%i%]!%b%m%~1$E[%f%m%text%$E[%t%;"
+            set "p=!PL_P[%i%]!48;%back%m%~1$E[38;%fore%m%text%$E[38;%back%;"
         ) else (
-            set "p=!PL_P[%i%]!%b%m%~1$E[%t%;"
+            set "p=!PL_P[%i%]!48;%back%m%~1$E[38;%back%;"
         )
     )
 
@@ -118,18 +114,40 @@ exit /b
     goto :eof
 
 :color ([value]) -> fore, back
-    if "%1" == "" goto :eof
-    set back=%1
-    if "%back:~1,1%" == "+" (
-        set fore=6%back:~0,1%
-        set back=%back:~2%
-    ) else (
-        set fore=%back:~0,1%
-        set back=%back:~1%
+    setlocal EnableDelayedExpansion
+
+    set value=#%1
+    if "%value:~3,1%" == "" (
+        set /a fore=0x0%value:~1,1%
+        set /a back=0x0%value:~2,1%
+        goto :color_8bit
     )
-    if "%back:~1,1%" == "+" (
-        set back=6%back:~0,1%
-    ) else (
-        set back=%back:~0,1%
+    if "%value:~5,1%" == "" (
+        set /a fore=232+0%value:~1,2%
+        set /a back=232+0%value:~3,2%
+        goto :color_8bit
+    )
+    if "%value:~7,1%" == "" (
+        set /a fore=16 + 36 * 0%value:~1,1% + 6 * 0%value:~2,1% + 0%value:~3,1%
+        set /a back=16 + 36 * 0%value:~4,1% + 6 * 0%value:~5,1% + 0%value:~6,1%
+        goto :color_8bit
+    )
+
+    set /a fr=0x0%value:~1,2%
+    set /a fg=0x0%value:~3,2%
+    set /a fb=0x0%value:~5,2%
+    set /a br=0x0%value:~7,2%
+    set /a bg=0x0%value:~9,2%
+    set /a bb=0x0%value:~11,2%
+    ( endlocal
+        set fore=2;%fr%;%fg%;%fb%
+        set back=2;%br%;%bg%;%bb%
+    )
+    goto :eof
+
+    :color_8bit
+    ( endlocal
+        set fore=5;%fore%
+        set back=5;%back%
     )
     goto :eof
