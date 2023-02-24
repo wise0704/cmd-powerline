@@ -1,0 +1,7 @@
+### VisualStudioCode ###
+.vscode/
+.history/
+
+### Windows ###
+Thumbs.db
+[Dd]esktop.ini

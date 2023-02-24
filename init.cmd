@@ -7,8 +7,8 @@ set PL_DIR=%~dp0
 set PL_ARGS=%*
 
 for %%i in (
-    cd cd..
-    pushd pushd..
+    cd cd. cd..
+    pushd pushd. pushd..
     popd
     git
 ) do (

@@ -1,5 +1,10 @@
 # CMD Powerline
 
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/wise0704/cmd-powerline?label=latest)](https://github.com/wise0704/cmd-powerline/tags)
+[![GitHub license](https://img.shields.io/github/license/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/blob/development/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/pulls)
+
 ## Introduction
 
 Simple and easily customisable Powerline for Windows Command Prompt.
@@ -16,16 +21,24 @@ Simple and easily customisable Powerline for Windows Command Prompt.
 
 > **Prerequisite**: A font supporting Powerline symbols needs to be installed.
 
-Firstly, [clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to a desired location.
-For example, under `%HOME%\.cmd\`.
+Firstly, choose a desired location (e.g. `%HOME%\.cmd\`) and clone the `latest` branch into the directory:
 
-> You could also manually download the repository as a .zip file and extract to the desired location.
-However, you will have to repeat this process instead of a `git pull` if there are any updates to the files.
+```console
+> git clone -b latest --depth 1 https://github.com/wise0704/cmd-powerline.git
+```
 
-Now, all you have to do is: whenever you want to call `cmd` for an interactive window, call `cmd /k "path\to\cmd-powerline\init.cmd"` instead.
+If you want to download a specific version, then supply the version tag from the [releases](https://github.com/wise0704/cmd-powerline/tags) instead of the `latest` branch:
+
+```console
+> git clone -b <version> --depth 1 https://github.com/wise0704/cmd-powerline.git
+```
+
+Alternatively, you can download the repository as a .zip file and extract it into the directory.
+
+Now, whenever you want to call `cmd` for an interactive window, call `cmd /k "path\to\cmd-powerline\init.cmd"` instead.
 Make sure `path\to\cmd-powerline` is the location you cloned the repository into.
 
-You can append extra arguments to select the style profiles of each instance for different occasions. See [configuring `styles.cmd`](#stylescmd).
+You can append extra arguments to select the style profiles to apply. See [configuring `styles.cmd`](#stylescmd).
 
 ### Example: Windows Terminal
 
@@ -37,20 +50,17 @@ You can append extra arguments to select the style profiles of each instance for
 
 1. Open settings, and navigate to Terminal > Integrated > Profiles: Windows (`"terminal.integrated.profiles.windows"`).
 2. Edit the value in `settings.json`.
-3. Modify `"args"` of `"Command Prompt"` to `["/k", "path\\to\\cmd-powerline\\init.cmd"]`.
-
-   Make sure the backslashes are escaped in the JSON file.
+3. Modify `"args"` of `"Command Prompt"` to `["/k", "path\\to\\cmd-powerline\\init.cmd"]`. (Make sure the backslashes are escaped in the JSON file.)
 
 ### _(Not Recommended)_ Using Registry
 
-Optionally, you can add/modify the `HKLM | HKCU \Software\Microsoft\Command Processor\AutoRun` key to run `init.cmd`.
+Optionally, you can add/modify the `(HKLM|HKCU)\Software\Microsoft\Command Processor\AutoRun` key to run `init.cmd`.
 This way, any instance of a Command Prompt window will have the Powerline set up.
 
 However, do note that modifying the AutoRun key is not recommended.
-Although code contains checks to ensure that `init.cmd` will only run on an interactive window,
-there may still be bugs due to the nature of the AutoRun key.
+Although code contains checks to ensure that `init.cmd` will only run on an interactive window, there may still be bugs due to the nature of the AutoRun key.
 
-> Additionally, you should modify or clear out the content of [`header.cmd`](#headercmd),
+Additionally, you should modify or clear out the content of [`header.cmd`](#headercmd),
 as the original header text will be displayed as usual with this method.
 
 ## Configuration
@@ -93,7 +103,7 @@ You can add/edit individual profiles and sections, including the default profile
     - 666 cube: A pair of 3-digit heximal (base 6) numbers of RGB &mdash; 000~555.
     - 24-bit: A pair of 6-digit hexadecimal numbers of RGB &mdash; 000000~FFFFFF
 
-    Colour can be ommited, in which case it defaults to either the colours specified in the segment definition, or `00`.
+    Colour can be omitted, in which case it defaults to either the colours specified in the segment definition, or `00`.
 
 - `separator`: A character to append at the end of each section. For example, the right-facing-triangle character `U+E0B0` (Powerline font symbol).
 
