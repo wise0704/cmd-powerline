@@ -1,7 +1,7 @@
 # CMD Powerline
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/wise0704/cmd-powerline?label=latest)](https://github.com/wise0704/cmd-powerline/tags)
-[![GitHub license](https://img.shields.io/github/license/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/blob/development/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/wise0704/cmd-powerline)](https://github.com/wise0704/cmd-powerline/pulls)
 
@@ -27,7 +27,7 @@ Firstly, choose a desired location (e.g. `%HOME%\.cmd\`) and clone the `latest` 
 > git clone -b latest --depth 1 https://github.com/wise0704/cmd-powerline.git
 ```
 
-If you want to download a specific version, then supply the version tag from the [releases](https://github.com/wise0704/python-cs-events/releases) instead of the `latest` branch:
+If you want to download a specific version, then supply the version tag from the [releases](https://github.com/wise0704/cmd-powerline/tags) instead of the `latest` branch:
 
 ```console
 > git clone -b <version> --depth 1 https://github.com/wise0704/cmd-powerline.git
