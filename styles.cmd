@@ -114,14 +114,24 @@ goto :eof
 set text=$S%OS%$S
 goto :eof
 
+:s_arch
+set text=$S%PROCESSOR_ARCHITECTURE%$S
+goto :eof
+
 :s_session
 set text=$S%%SESSIONNAME%%$S
 goto :eof
 
 :s_git
 set var="tokens=1,*" %%i
-set cmd='git branch 2^>nul ^| findstr /bc:"* "'
+set cmd='git branch 2^>nul ^| findstr /b /c:"* "'
 set text=$S$S%%j$S
+goto :eof
+
+:s_cwd_short
+set var="delims=" %%i
+set cmd='"%~dp0scripts\cwd_short.cmd"'
+set text=$S%%i$S
 goto :eof
 
 rem :s_my_script
